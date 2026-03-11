@@ -17,4 +17,8 @@ class GetProductUseCase {
   Future<List<String>> callCatogaries() async {
     return await repository.getCategories();
   }
+
+  Future<List<ProductEntity>> callCategoryProducts(String category) async {
+  return await repository.getProductsByCategory(category);
+}
 }

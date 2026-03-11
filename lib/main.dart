@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: BlocProvider(
-        create: (_)=>ProductBloc(useCase)..add(GetProductEvent(page: 1)),
+        create: (_)=>ProductBloc(useCase)..add(GetCategoriesEvent()),
         child: ProductScreen()),
     );
   }

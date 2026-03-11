@@ -11,6 +11,7 @@ part 'product_state.dart';
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final GetProductUseCase getProductUseCase;
   Timer? _debounce;
+  List<String> categories = [];
   ProductBloc(this.getProductUseCase) : super(ProductInitial()) {
     on<GetProductEvent>((event, emit) async {
       
@@ -59,11 +60,45 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
 });
 on<GetCategoriesEvent>((event, emit) async {
+
   emit(ProductLoading());
 
-  final categories = await getProductUseCase.callCatogaries();
+  try {
 
-  emit(CatogaryLoaded(categories));
+    final result = await getProductUseCase.callCatogaries();
+
+    categories = result;
+
+    final products =
+        await getProductUseCase.callCategoryProducts(categories.first);
+
+    emit(ProductLoaded(products, 1));
+
+  } catch (e) {
+
+    emit(ProductError(e.toString()));
+
+  }
+
+});
+
+on<GetProductsByCategoryEvent>((event, emit) async {
+
+  emit(ProductLoading());
+
+  try {
+
+    final products =
+        await getProductUseCase.callCategoryProducts(event.category);
+
+    emit(ProductLoaded(products, 1));
+
+  } catch (e) {
+
+    emit(ProductError(e.toString()));
+
+  }
+
 });
   }
 }

@@ -21,8 +21,10 @@ class ChangePageEvent extends ProductEvent {
   ChangePageEvent(this.page);
 }
 
-class GetCategoriesEvent extends ProductEvent {
-  final String categories;
+class GetCategoriesEvent extends ProductEvent {}
 
-  GetCategoriesEvent(this.categories);
+class GetProductsByCategoryEvent extends ProductEvent {
+  final String category;
+
+  GetProductsByCategoryEvent(this.category);
 }

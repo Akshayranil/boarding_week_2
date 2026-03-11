@@ -29,11 +29,14 @@ class ProductRepositoryImp implements ProductRepository {
         )
         .toList();
   }
+@override
+Future<List<String>> getCategories() async {
+  final data = await api.getCategories();
 
-  Future<List<String>> getCategories() async {
-    final data = await api.getCategories();
-    return List<String>.from(data);
-  }
+  return (data as List)
+      .map((e) => e['slug'].toString())
+      .toList();
+}
 
   @override
 Future<List<ProductEntity>> getProductsByCategory(String category) async {
